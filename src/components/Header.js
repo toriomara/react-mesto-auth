@@ -1,17 +1,17 @@
 import { useState } from 'react';
-import logo from '../images/logo.svg';
 import { Link, useLocation } from 'react-router-dom';
 import { BurgerMenu } from './BurgerMenu';
+import logo from '../images/logo.svg';
 
-export const Header = ({ onSignOut, userData }) => {
+export const Header = (props) => {
+  const { onSignOut, userData } = props;
   const [isBurgerMenuOpen, setIsBurgerMenuOpen] = useState(false);
+  const { pathname } = useLocation();
 
   const handleBurgerMenu = () => {
     setIsBurgerMenuOpen(!isBurgerMenuOpen);
     console.log('Click');
   };
-
-  const { pathname } = useLocation();
 
   return (
     <header className='header'>

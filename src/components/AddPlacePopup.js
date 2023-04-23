@@ -1,8 +1,23 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { PopupWithForm } from './PopupWithForm';
+import { useForm } from '../hooks/useForm';
 
 export const AddPlacePopup = (props) => {
   const { isOpen, onClose, onAddPlace, isLoading } = props;
+
+  // const { values, handleChange, setValues } = useForm({});
+
+  // const handleSubmit = (e) => {
+  //   e.preventDefault();
+  //   onAddPlace({
+  //     name: values.name,
+  //     link: values.link,
+  //   });
+  // };
+
+  // useEffect(() => {
+  //   setValues({});
+  // }, [isOpen]);
 
   const [name, setName] = useState('');
   const [link, setLink] = useState('');
@@ -18,14 +33,15 @@ export const AddPlacePopup = (props) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     onAddPlace({
-      name,
-      link,
+      name: '',
+      link: '',
     });
-    // Занулил тут инпуты, но не знаю надо ли (т.е. соответствует ли логике) и правильно ли.
-    // На мой взгляд логично, так как место, в отличие от имени, почти всегда новое
+  };
+
+  useEffect(() => {
     setName('');
     setLink('');
-  };
+  }, [isOpen]);
 
   return (
     <PopupWithForm
@@ -46,7 +62,9 @@ export const AddPlacePopup = (props) => {
         placeholder='Название'
         minLength='2'
         maxLength='30'
-        value={name}
+        value={name || ''}
+        // value={values.name || ''}
+        // onChange={handleChange}
         onChange={handleChangeName}
         required
       />
@@ -57,7 +75,9 @@ export const AddPlacePopup = (props) => {
         name='card-link'
         type='url'
         placeholder='Ведите адрес ссылки'
-        value={link}
+        value={link || ''}
+        // value={values.link || ''}
+        // onChange={handleChange}
         onChange={handleChangeLink}
         required
       />

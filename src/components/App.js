@@ -19,6 +19,10 @@ import { InfoTooltip } from './InfoTooltip';
 
 // Бургер меню не окончено, ноя хочу его доделать. Просто пока не могу понять как сдвигать всю страницу вниз
 
+// Михаил! Спасибо большое за подсказки по улучшению. Не все успел, а хук useForm не смог сделать (логику
+// понимаю, но пока он не заработал). Прошу прощения за большое количество закомментированного кода (хочу всё
+// же доделать и useForm, и универсальный попап, и валидацию). Не хочу тянуть, чтобы совсем не опаздать со сдачей)
+
 const App = () => {
   const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = useState(false);
   const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = useState(false);
@@ -90,7 +94,7 @@ const App = () => {
         closeAllPopups();
       })
       .catch((err) => console.log(`Ошибка: ${err}`))
-      .finally(() => setIsLoading(true));
+      .finally(() => setIsLoading(false));
   };
 
   const handleAddPlaceSubmit = ({ name, link }) => {
@@ -188,6 +192,10 @@ const App = () => {
   useEffect(() => {
     checkToken();
   }, []);
+
+  // useEffect(() => {
+  //   localStorage.setItem('jwt', checkToken);
+  // }, [userData]);
 
   const handleRegister = (email, password) => {
     mestoAuth
