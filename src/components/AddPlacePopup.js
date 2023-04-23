@@ -33,8 +33,8 @@ export const AddPlacePopup = (props) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     onAddPlace({
-      name: '',
-      link: '',
+      name,
+      link,
     });
   };
 
