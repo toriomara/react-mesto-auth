@@ -5,19 +5,12 @@ class Api {
     this._headers = headers;
   }
 
-  _request(url) {
-    const options = {
-      credentials: 'include'
-    }
-    return fetch(url, options).then(this._getResponse);
-  }
-
-  // getToken(jwt) {
-  //   this._headers.authorization = `Bearer ${jwt}`;
-  // }
-
   _getResponse(res) {
     return res.ok ? res.json() : Promise.reject(`Ошибка: ${res.status}`);
+  }
+
+  _request(url, options) {
+    return fetch(url, options).then(this._getResponse);
   }
 
   getInitialCards() {
@@ -47,11 +40,18 @@ class Api {
 
   changeLikeCardStatus(cardId, isLiked) {
     const methodToggle = !isLiked ? 'DELETE' : 'PUT';
-    return this._request(`${this._baseUrl}/cards/likes/${cardId}`, {
+    return this._request(`${this._baseUrl}/cards/${cardId}/likes`, {
       method: methodToggle,
       headers: this._headers,
     });
   }
+  // changeLikeCardStatus(cardId, isLiked) {
+  //   const methodToggle = !isLiked ? 'DELETE' : 'PUT';
+  //   return this._request(`${this._baseUrl}/cards/likes/${cardId}`, {
+  //     method: methodToggle,
+  //     headers: this._headers,
+  //   });
+  // }
 
   getUserInfo() {
     return this._request(`${this._baseUrl}/users/me`, {
@@ -84,5 +84,6 @@ export const api = new Api({
   baseUrl: BASE_URL,
   headers: {
     'Content-Type': 'application/json',
+    Authorization: `Bearer ${localStorage.getItem('jwt')}`
   },
 });
